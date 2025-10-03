@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5...4.0)
-project(compiler CXX C)
+project(Recognizer_automata CXX C)
 set(SOURCE src/main.cpp)
 add_library(linked_list libs/list/list.c)
 

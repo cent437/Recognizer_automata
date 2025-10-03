@@ -20,9 +20,9 @@ void push_back(list **list_array, unsigned head_index, const char *data)
 {
     list *p = create_node(data);
     list *iter = list_array[head_index];
-    if (iter == NULL && p != NULL)
+    if (list_array[head_index] == NULL && p != NULL)
     {
-        iter = p;
+        list_array[head_index] = p;
         return;
     }
     else if (iter != NULL && p != NULL)
@@ -39,13 +39,13 @@ void push_back(list **list_array, unsigned head_index, const char *data)
 void pop_back(list **list_array, unsigned head_index)
 {
     list *iter = list_array[head_index];
-    if (NULL == iter)
+    if (NULL == list_array[head_index])
     {
         puts("Список пуст.");
         return;
     }
 
-    else if (NULL == iter->next)
+    else if (NULL == list_array[head_index])
     {
         free(iter);
         list_array[head_index] = NULL;

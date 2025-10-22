@@ -4,16 +4,19 @@
 #define TABLE_MAX_SIZE 256
 char **init_table(size_t table_size, size_t ID_max_length)
 {
+    /* Выделение памяти под таблицу идентификаторов. */
     char **value_table = (char **)malloc(table_size * sizeof(char *));
     for (size_t i = 0; i < table_size; i++)
     {
         value_table[i] = (char *)malloc(ID_max_length * sizeof(char));
+        /* Инициализация выделенной памяти нулями. */
         memset(value_table[i], '\0', ID_max_length);
     }
     return value_table;
 }
 size_t hash(const char *r)
 {
+    /* Создание ключа путем хеширования строки. */
     size_t n = 0;
     for (size_t i = 0; i < strlen(r); i++)
     {
@@ -32,7 +35,7 @@ void insert(char **value_table, const char *value)
         puts("Таблица значений отсутствует.");
         return;
     }
-
+    /* Вставка идентификатора в таблицу по ключу. */
     strcpy(value_table[hash(value)], value);
 }
 /* Функция поиска в хеш таблице */

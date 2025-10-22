@@ -4,7 +4,7 @@ extern "C"
 {
 #include "../libs/symbol_table/symbol_table.h"
 }
-static char **values;
+char **values = NULL; // Таблица идентификаторов.
 
 int main()
 {
@@ -42,5 +42,8 @@ int main()
 		}
 	}
 
+	for (size_t i = 0; i < TABLE_MAX_SIZE; i++)
+		free(values[i]);
+	free(values);
 	return 0;
 }

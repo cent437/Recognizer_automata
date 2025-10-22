@@ -3,7 +3,6 @@
 #include <string.h>
 extern "C"
 {
-#include "../libs/list/list.h"
 #include "../libs/symbol_table/symbol_table.h"
 }
 static char **values;

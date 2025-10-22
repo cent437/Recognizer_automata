@@ -1,6 +1,5 @@
 ﻿
 #include <iostream>
-#include <string.h>
 extern "C"
 {
 #include "../libs/symbol_table/symbol_table.h"

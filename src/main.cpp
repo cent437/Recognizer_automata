@@ -23,21 +23,20 @@ public:
 		this->edges = new list *[edges_count];
 		for (size_t i = 0; i < edges_count; i++)
 			edges[i] = NULL;
-
+		push_back(this->edges, 0, "-+");		// переход в q3
 		push_back(this->edges, 0, "123456789"); // переход в q1
-		push_back(this->edges, 0, "0");			 // переход в q2
-		push_back(this->edges, 0, "-+");			 // переход в q3
+		push_back(this->edges, 0, "0");			// переход в q2
 
+		push_back(this->edges, 1, "h");			 // Переход в q5
+		push_back(this->edges, 1, "l");			 // переход в q9
+		push_back(this->edges, 1, "u");			 // переход в q8
+		push_back(this->edges, 1, ";");			 // Переход в q7
 		push_back(this->edges, 1, "0123456789"); // переход в q1
-		push_back(this->edges, 1, "h");			  // Переход в q5
-		push_back(this->edges, 1, "l");			  // переход в q9
-		push_back(this->edges, 1, "u");			  // переход в q8
-		push_back(this->edges, 1, ";");			  // Переход в q7
 
 		push_back(this->edges, 2, "x"); // Переход в q4
 
-		push_back(this->edges, 3, "1234567"); // переход в q1
 		push_back(this->edges, 3, "0");		  // переход в q2
+		push_back(this->edges, 3, "1234567"); // переход в q1
 
 		push_back(this->edges, 4, "0123456789abcdef"); // переход в q12
 
@@ -57,7 +56,7 @@ public:
 		push_back(this->edges, 11, ";"); // переход в q7
 
 		push_back(this->edges, 12, "0123456789abcdef"); // переход в q12
-		push_back(this->edges, 12, ";");						// переход в q7
+		push_back(this->edges, 12, ";");				// переход в q7
 
 		push_back(this->edges, 7, "Accept."); // конечная вершина
 	}
@@ -66,66 +65,26 @@ public:
 	{
 		std::string condition;
 		list *current_stance = this->edges[0];
+		vertex = 0;
 		bool success = false;
-		while (current_stance->next)
+		printf("q%llu ", vertex);
+		while (current_stance)
 		{
 			condition = current_stance->data;
-			/* Проверка на знак. */
-			if ((constant[0] == '-' or constant[0] == '+') and mask[0] == false)
+			if (constant.find(condition) == std::string::npos)
 			{
 				vertex = 3;
-				current_stance = this->edges[vertex];
 				printf("q%llu ", vertex);
-				mask[0] = true;
+				current_stance = this->edges[vertex];
+				condition = current_stance->data;
+				if (constant.find(condition) == std::string::npos)
+				{
+				}
 			}
 
-			/* Проверка недесятичной константы. */
-			else if ((constant[1] == 'x' or constant[0] == '0') and (mask[6] == false))
-			{
-				if (constant[1] == 'x' and mask[2] == false)
-				{
-					mask[2] = true;
-					mask[6] = true;
-					vertex = 4;
-					printf("q%llu ", vertex);
-					current_stance = this->edges[vertex];
-				}
-				if (constant[1] == ';')
-				{
-					success = true;
-					vertex = 7;
-					printf("q%llu ", vertex);
-					current_stance = this->edges[vertex];
-				}
-				else if (constant[0] == '0' and mask[1] == false)
-				{
-					mask[1] = true;
-					mask[6] = true;
-					vertex = 3;
-					printf("q%llu ", vertex);
-					current_stance = this->edges[vertex];
-				}
-			}
-			/* Поиск цифр в зависимости от системы счисления. */
-			else if (constant.find_first_of(current_stance->data) != std::string::npos and mask[4] == false)
-			{
-				vertex = 1;
-				mask[4] = true;
-				printf("q%llu ", vertex);
-				current_stance = this->edges[vertex];
-			}
-			/* Поиск ";" в конце константы. */
-			else if (constant.find_first_of(current_stance->data) != std::string::npos and mask[7] == false)
-			{
-				vertex = 7;
-				mask[7] = true;
-				success = true;
-				printf("q%llu ", vertex);
-				current_stance = this->edges[vertex];
-			}
-			else
-				current_stance = current_stance->next;
+			current_stance = current_stance->next;
 		}
+
 		if (success)
 			std::cout << current_stance->data;
 

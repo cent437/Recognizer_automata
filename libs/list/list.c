@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-list *create_node(char *data)
+list *create_node(size_t data)
 {
     list *p = NULL;
     if (NULL == (p = (list *)malloc(sizeof(list))))
@@ -11,12 +11,12 @@ list *create_node(char *data)
         perror("Ошибка выделения памяти.");
         return p;
     }
-    strcpy(p->data, data);
+    p->data = data;
     p->next = NULL;
     p->prev = NULL;
     return p;
 }
-void push_back(list **list_array, unsigned head_index, const char *data)
+void push_back(list **list_array, unsigned head_index, size_t data)
 {
     list *p = create_node(data);
     list *iter = list_array[head_index];
@@ -64,7 +64,7 @@ void pop_back(list **list_array, unsigned head_index)
     }
 }
 
-void push_front(list **list_array, unsigned head_index, const char *data)
+void push_front(list **list_array, unsigned head_index, size_t data)
 {
     list *p = create_node(data);
     if (list_array[head_index] == NULL && p != NULL)
